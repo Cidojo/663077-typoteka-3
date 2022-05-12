@@ -6,6 +6,8 @@ const chalk = require('chalk');
 const {ExitCode, MONTH_MS} = require('../../constants');
 
 const DEFAULT_COUNT = 1;
+const MONTH_PAST_DATE_RESTRICT = 3
+const MAX_ARTICLES_RESTRICT = 1000
 const FILE_NAME = 'mocks.json';
 
 const TITLES = [
@@ -63,7 +65,7 @@ const generateOffers = (count) => (
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
     announce: shuffle(SENTENCES).slice(0, 5).join(' '),
     fullText:  shuffle(SENTENCES).slice(0, getRandomInt(1, SENTENCES.length - 1)).join(' '),
-    createdDate: getRandomFormattedPastDate(3 * MONTH_MS),
+    createdDate: getRandomFormattedPastDate(MONTH_PAST_DATE_RESTRICT * MONTH_MS),
     category: [CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]],
   }))
 );
@@ -74,8 +76,8 @@ module.exports = {
     const [count] = args;
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
 
-    if (countOffer > 1000) {
-      console.info(chalk.yellow('Не больше 1000 публикаций.'));
+    if (countOffer > MAX_ARTICLES_RESTRICT) {
+      console.info(chalk.yellow(`Не больше ${MAX_ARTICLES_RESTRICT} публикаций.`));
       process.exit(ExitCode.error);
     }
 
