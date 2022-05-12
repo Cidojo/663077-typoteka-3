@@ -1,12 +1,12 @@
 'use strict';
 
 const fs = require('fs');
-const {shuffle, getRandomInt} = require('../../utils/utils');
+const {shuffle, getRandomInt, getRandomFormattedPastDate} = require('../../utils/utils');
 const chalk = require('chalk');
-const {ExitCode} = require('../../constants');
+const {ExitCode, MONTH_MS} = require('../../constants');
 
 const DEFAULT_COUNT = 1;
-const FILE_NAME = '../../../mocks.json';
+const FILE_NAME = 'mocks.json';
 
 const TITLES = [
   'Ёлки. История деревьев',
@@ -63,7 +63,7 @@ const generateOffers = (count) => (
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
     announce: shuffle(SENTENCES).slice(0, 5).join(' '),
     fullText:  shuffle(SENTENCES).slice(0, getRandomInt(1, SENTENCES.length - 1)).join(' '),
-    createdDate: '',
+    createdDate: getRandomFormattedPastDate(3 * MONTH_MS),
     category: [CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]],
   }))
 );
@@ -83,10 +83,10 @@ module.exports = {
 
     fs.writeFile(FILE_NAME, content, (err) => {
       if (err) {
-        return console.error(`Can't write data to file...`);
+        return console.error(`Не получилось создать файл...`);
       }
 
-      return console.info('Operation success. File created.');
+      return console.info('Успешно. Файл создан.');
     });
   }
 };

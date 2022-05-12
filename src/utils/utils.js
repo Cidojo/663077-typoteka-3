@@ -16,22 +16,25 @@ const shuffle = (someArray) => {
   return someArray;
 };
 
-const getRandomPastDate = (min) => {
+const formatDate = (date) => {
+  const dateTime = new Date(date).toISOString().split('T');
+  const dateFormatted = dateTime[0];
+  const timeFormatted = dateTime[1].substr(0, 8);
+
+  return `${dateFormatted} ${timeFormatted}`;
+};
+
+const getRandomFormattedPastDate = (min) => {
   const minLimit = parseInt(min, 10) || 0;
   const nowMs = new Date();
 
-  return new Date(getRandomInt(minLimit, nowMs));
-};
+  const randomDate = new Date(getRandomInt(nowMs - minLimit, nowMs));
 
-const formatDate = (date) => {
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  return formatDate(randomDate);
 };
-
-new Date().
 
 module.exports = {
   getRandomInt,
   shuffle,
-  getRandomPastDate,
-  formatDate,
+  getRandomFormattedPastDate,
 }
