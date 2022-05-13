@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
@@ -17,7 +17,7 @@ const shuffle = (someArray) => {
 };
 
 const formatDate = (date) => {
-  const dateTime = new Date(date).toISOString().split('T');
+  const dateTime = new Date(date).toISOString().split(`T`);
   const dateFormatted = dateTime[0];
   const timeFormatted = dateTime[1].substr(0, 8);
 
@@ -37,4 +37,4 @@ module.exports = {
   getRandomInt,
   shuffle,
   getRandomFormattedPastDate,
-}
+};
