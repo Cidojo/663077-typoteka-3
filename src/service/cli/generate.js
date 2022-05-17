@@ -25,7 +25,7 @@ const readContent = async (filePath) => {
 };
 
 const generateOffers = (count, titles, categories, sentences) => (
-  Array(count).fill({}).map(() => ({
+  Array.from({length: count}, () => ({
     title: titles[getRandomInt(0, titles.length - 1)],
     announce: shuffle(sentences).slice(0, 5).join(` `),
     fullText: shuffle(sentences).slice(0, getRandomInt(1, sentences.length - 1)).join(` `),
