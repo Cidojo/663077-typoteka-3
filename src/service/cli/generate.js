@@ -72,23 +72,22 @@ const generateOffers = (count) => (
 
 module.exports = {
   name: `--generate`,
-  run(args) {
+  async run(args) {
     const [count] = args;
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
 
     if (countOffer > MAX_ARTICLES_RESTRICT) {
-      console.info(chalk.yellow(`Не больше ${MAX_ARTICLES_RESTRICT} публикаций.`));
+      console.info(chalk.red(`Не больше ${MAX_ARTICLES_RESTRICT} публикаций.`));
       process.exit(ExitCode.error);
     }
 
     const content = JSON.stringify(generateOffers(countOffer));
 
-    fs.writeFile(FILE_NAME, content, (err) => {
-      if (err) {
-        return console.error(`Не получилось создать файл...`);
-      }
-
-      return console.info(`Успешно. Файл создан.`);
-    });
+    try {
+      await fs.writeFile(FILE_NAME, content);
+      console.info(chalk.green(`Успешно. Файл создан.`));
+    } catch (err) {
+      console.error(chalk.red(`Не получилось создать файл...`));
+    }
   }
 };
