@@ -61,7 +61,7 @@ const CATEGORIES = [
 ];
 
 const generateOffers = (count) => (
-  Array(count).fill({}).map(() => ({
+  Array.from({length: count}, () => ({
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
     announce: shuffle(SENTENCES).slice(0, 5).join(` `),
     fullText: shuffle(SENTENCES).slice(0, getRandomInt(1, SENTENCES.length - 1)).join(` `),
