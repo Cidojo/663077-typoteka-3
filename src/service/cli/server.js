@@ -4,25 +4,17 @@ const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
 const http = require(`http`);
 const {HttpCode} = require(`../../constants`);
+const {getMainTemplate} = require(`../templates/main-template`);
 
 const DEFAULT_PORT = 3000;
 const MOCK_FILENAME = `mocks.json`;
 
 const sendResponse = (res, statusCode, message) => {
-  const template = `
-    <!Doctype html>
-      <html lang="ru">
-      <head>
-        <title>With love from Node</title>
-      </head>
-      <body>${message}</body>
-    </html>`.trim();
-
   res.writeHead(statusCode, {
     'Content-Type': `text/html; charset=UTF-8`,
   });
 
-  res.end(template);
+  res.end(getMainTemplate(message));
 };
 
 const onClientConnect = async (req, res) => {
