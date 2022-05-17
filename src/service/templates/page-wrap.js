@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports.getMainTemplate = (message) => {
+module.exports = (message) => {
   return `
     <!Doctype html>
       <html lang="ru">
