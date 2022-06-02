@@ -27,12 +27,6 @@ app.use(`/articles`, articlesRoutes);
 app.use(`*`, (req, res) => res
   .status(HttpCode.NOT_FOUND)
   .render(`errors/404`));
-app.use((err, res) => {
-  res
-    .status(HttpCode.SERVER_ERROR)
-    .render(`errors/500`);
-});
-
 
 app.listen(DEFAULT_PORT, () => {
   console.log(`
