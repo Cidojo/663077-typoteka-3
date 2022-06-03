@@ -1,42 +1,21 @@
 'use strict';
 
-const fs = require(`fs`).promises;
+const express = require(`express`);
 const chalk = require(`chalk`);
-const http = require(`http`);
+const postsRoutes = require(`./routes/posts-routes`);
 const {HttpCode} = require(`../../constants`);
-const {getPageWrappedTemplate} = require(`../templates`);
 
 const DEFAULT_PORT = 3000;
-const MOCK_FILENAME = `mocks.json`;
 
-const sendResponse = (res, statusCode, message) => {
-  res.writeHead(statusCode, {
-    'Content-Type': `text/html; charset=UTF-8`,
-  });
 
-  res.end(getPageWrappedTemplate(message));
-};
+const app = express();
+app.use(express.json());
 
-const onClientConnect = async (req, res) => {
-  const notFoundMessageText = `Not found`;
+app.use(`/posts`, postsRoutes);
 
-  switch (req.url) {
-    case `/`:
-      try {
-        const fileContent = await fs.readFile(MOCK_FILENAME);
-        const mocks = JSON.parse(fileContent);
-        const message = mocks.map((post) => `<li>${post.title}</li>`).join(``);
-        sendResponse(res, HttpCode.OK, `<ul>${message}</ul>`);
-      } catch (err) {
-        sendResponse(res, HttpCode.NOT_FOUND, notFoundMessageText);
-      }
-
-      break;
-    default:
-      sendResponse(res, HttpCode.NOT_FOUND, notFoundMessageText);
-      break;
-  }
-};
+app.use((req, res) => res
+  .status(HttpCode.NOT_FOUND)
+  .send(`Not found`));
 
 module.exports = {
   name: `--server`,
@@ -44,13 +23,10 @@ module.exports = {
     const [customPort] = args;
     const port = Number.parseInt(customPort, 10) || DEFAULT_PORT;
 
-    http.createServer(onClientConnect)
-      .listen(port)
-      .on(`listening`, () => {
-        console.info(chalk.green(`Ожидаю соединений на ${port}`));
-      })
-      .on(`error`, ({message}) => {
-        console.error(chalk.red(`Ошибка при создании сервера: ${message}`));
-      });
+    console.log(__dirname);
+
+    app.listen(port, () => {
+      console.info(chalk.green(`Ожидаю соединений на ${port}`));
+    });
   }
 };
