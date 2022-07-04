@@ -3,6 +3,7 @@
 const fs = require(`fs`).promises;
 const chalk = require(`chalk`);
 const {nanoid} = require(`nanoid`);
+
 const {shuffle, getRandomInt, getRandomFormattedPastDate} = require(`../../utils/utils`);
 const {ExitCode, MONTH_MS, MAX_ID_LENGTH} = require(`../../constants`);
 

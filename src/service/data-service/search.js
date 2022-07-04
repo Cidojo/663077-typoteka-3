@@ -9,7 +9,6 @@ class SearchService {
     return this._articles.
     filter((article) => article.title.includes(searchText));
   }
-
 }
 
 module.exports = SearchService;

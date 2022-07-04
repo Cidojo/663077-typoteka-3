@@ -18,6 +18,19 @@ module.exports = (app, articleService, commentService) => {
       .json(articles);
   });
 
+  route.get(`/:articleId`, async (req, res) => {
+    const {articleId} = req.params;
+    const article = await articleService.findOne(articleId);
+
+    if (!article) {
+      return res.status(HttpCode.NOT_FOUND)
+        .send(`Not found with ${articleId}`);
+    }
+
+    return res.status(HttpCode.OK)
+      .json(article);
+  });
+
   route.post(`/`, articleValidator, async (req, res) => {
     const article = articleService.create(req.body);
 

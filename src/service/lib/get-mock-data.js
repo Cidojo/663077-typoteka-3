@@ -12,7 +12,7 @@ const getMockData = async () => {
 
   try {
     const content = await fs.readFile(MOCK_FILENAME, `utf8`);
-    data = content.trim().split(`\n`);
+    data = JSON.parse(content);
   } catch (err) {
     console.error(err);
     return (err);
