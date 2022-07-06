@@ -8,7 +8,6 @@ const articleKeys = [
   `fullText`,
   `createdDate`,
   `category`,
-  `comments`
 ];
 
 module.exports = (req, res, next) => {
