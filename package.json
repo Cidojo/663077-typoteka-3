@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/Cidojo/663077-typoteka-3#readme",
   "devDependencies": {
-    "cross-env": "7.0.3",
     "eslint": "8.15.0",
     "eslint-config-htmlacademy": "0.6.0",
     "jest": "26.4.2",
@@ -32,6 +31,7 @@
   },
   "dependencies": {
     "chalk": "4.1.2",
+    "cross-env": "7.0.3",
     "express": "4.18.1",
     "nanoid": "3.3.4",
     "pino": "6.6.0",
